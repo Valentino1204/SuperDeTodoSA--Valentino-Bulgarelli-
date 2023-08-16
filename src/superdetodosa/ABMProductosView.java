@@ -50,6 +50,9 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTablaProducto = new javax.swing.JTable();
         jbRefresh = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+
+        setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel1.setText("Gestion Productos");
@@ -118,6 +121,9 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel7.setText("Todos los Productos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,6 +131,23 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(198, 198, 198)
+                                        .addComponent(jbRefresh))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jbNuevo)
+                                .addGap(101, 101, 101)
+                                .addComponent(jbGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbEliminar)))
+                        .addGap(82, 82, 82))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -140,28 +163,17 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
                             .addComponent(jtPrecio)
                             .addComponent(jtDescripcion)
                             .addComponent(jtCodigo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                         .addComponent(jbBuscar)
-                        .addGap(73, 73, 73))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jbNuevo)
-                        .addGap(101, 101, 101)
-                        .addComponent(jbGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbEliminar)
-                        .addGap(82, 82, 82))))
+                        .addGap(73, 73, 73))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(247, 247, 247)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addComponent(jbRefresh)))
+                        .addGap(220, 220, 220)
+                        .addComponent(jLabel7)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -195,11 +207,13 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
                     .addComponent(jbNuevo)
                     .addComponent(jbGuardar)
                     .addComponent(jbEliminar))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbRefresh)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -211,6 +225,9 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // BOTON BUSCAR
+        boolean encontrado = false; //Variable que va a validar si el objeto fue encontrado
+        
+        try{
         for(Producto prod:Menu.listaProductos){
             
             int codigo = Integer.parseInt(jtCodigo.getText());
@@ -220,25 +237,38 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
                 jtPrecio.setText(prod.getPrecio()+"");
                 jcbRubro.setSelectedItem(prod.getRubro());
                 jtStock.setText(prod.getStock()+"");
+                
+                encontrado = true;
             }
+        }
+        // si no lo encuentra arroja un cuadro que dice que no lo encontro
+        if(encontrado == false){
+                JOptionPane.showMessageDialog(this, "No existe ese producto");
+                limpiarFieldText();
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Ingrese el codigo para buscar");
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // BOTON NUEVO
         //try{
+            boolean yaExiste = false;
             int codigo = Integer.parseInt(jtCodigo.getText());
             double precio = Double.parseDouble(jtPrecio.getText());
             int stock = Integer.parseInt(jtStock.getText());
+            
+            if(yaExiste == false){
+                Menu.listaProductos.add(new Producto(codigo, jtDescripcion.getText(), precio, stock, (Categoria) jcbRubro.getSelectedItem()));
 
-            Menu.listaProductos.add(new Producto(codigo, jtDescripcion.getText(), precio, stock, (Categoria) jcbRubro.getSelectedItem()));
+                JOptionPane.showMessageDialog(this, "Se agrego el producto Correctamente");
 
-            JOptionPane.showMessageDialog(this, "Se agrego el producto Correctamente");
-
-            jtCodigo.setText("");
-            jtDescripcion.setText("");
-            jtPrecio.setText("");
-            jtStock.setText("");
+                limpiarFieldText();
+            }else{
+                JOptionPane.showMessageDialog(this, "Ese codigo ya es usado por otro producto, ingrese otro diferente.");
+                limpiarFieldText();
+            }
 
             /*if (jtDescripcion.getText().isEmpty()){
                 throw new NullPointerException();
@@ -267,10 +297,7 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
                     prod.setStock(Integer.parseInt(jtStock.getText()));
             }
         }
-        jtCodigo.setText("");
-        jtDescripcion.setText("");
-        jtPrecio.setText("");
-        jtStock.setText("");
+        limpiarFieldText();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
@@ -309,6 +336,7 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
@@ -353,5 +381,12 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
         for(;f>=0;f--){
             modelo.removeRow(f);
         }
+    }
+    
+    private void limpiarFieldText(){
+                jtCodigo.setText("");
+                jtDescripcion.setText("");
+                jtPrecio.setText("");
+                jtStock.setText("");
     }
 }
