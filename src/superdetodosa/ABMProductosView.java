@@ -257,7 +257,6 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // BOTON DE GUARDAR
-        
         int codigo = Integer.parseInt(jtCodigo.getText());
             for(Producto prod:Menu.listaProductos){
                 if(codigo == prod.getCodigo()){
@@ -268,7 +267,6 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
                     prod.setStock(Integer.parseInt(jtStock.getText()));
             }
         }
-            
         jtCodigo.setText("");
         jtDescripcion.setText("");
         jtPrecio.setText("");
@@ -277,14 +275,12 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // BOTON DE ELIMINAR
-        
         for(Producto prod:Menu.listaProductos){
             int codigo = Integer.parseInt(jtCodigo.getText());
             if(codigo == prod.getCodigo()){
                 Menu.listaProductos.remove(prod);
             }
         }
-        
         jtCodigo.setText("");
         jtDescripcion.setText("");
         jtPrecio.setText("");
@@ -294,7 +290,6 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
     private void jbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshActionPerformed
         // BOTON REFRESCAR
         borrarFilas();
-        
         for(Producto prod:Menu.listaProductos){
             modelo.addRow(new Object[]{
                 prod.getCodigo(),
@@ -329,6 +324,7 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarCombo(){
+        //METODO QUE CARGA EL COMBO BOX
         jcbRubro.addItem(Categoria.COMESTIBLE);
         jcbRubro.addItem(Categoria.LIMPIEZA);
         jcbRubro.addItem(Categoria.PERFUMERIA);
@@ -340,6 +336,7 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
     }
     
     private void armarCabecera(){
+        //METODO QUE ARMA LA CABECERA DE LA TABLA
         modelo.addColumn("Codigo");
         modelo.addColumn("Descripcion");
         modelo.addColumn("Precio");
@@ -351,6 +348,7 @@ public class ABMProductosView extends javax.swing.JInternalFrame {
     }
     
     private void borrarFilas(){
+        //METODO QUE ELIMINA LAS FILAS VIEJAS DE LA TABLA
         int f = jtTablaProducto.getRowCount()-1;
         for(;f>=0;f--){
             modelo.removeRow(f);
